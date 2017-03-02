@@ -1,9 +1,9 @@
 export var config = {
     web: {
-        uri: 'http://localhost:4200'
+        uri: 'http://ajardns.developersworkspace.co.za'
     },
     api: {
-        uri: 'http://localhost:3000/api'
+        uri: 'http://ajardns.developersworkspace.co.za/api'
     },
     oauth: {
         jwtSecret: 'ajardns_secret',

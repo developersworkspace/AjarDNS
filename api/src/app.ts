@@ -24,7 +24,7 @@ export class WebApi {
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: false }));
         app.use(cors());
-         app.use(expressWinston.logger({
+        app.use(expressWinston.logger({
             winstonInstance: logger,
             meta: false,
             msg: 'HTTP Request: {{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}'
