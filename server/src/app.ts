@@ -1,12 +1,17 @@
+// Imports
 import * as Packet from 'native-dns-packet';
+import * as udp from 'udp';
 
 import * as buffer from 'buffer';
 let Buffer = buffer.Buffer;
 
-import * as udp from 'udp';
+// Imports logger
+import { logger } from './logger';
 
+// Imports repository
 import { RecordsRepository } from './repositories/records';
 
+// Import models
 import { Record } from './models/record';
 
 export class DNSServer {
@@ -25,36 +30,42 @@ export class DNSServer {
     private initializeSocket() {
         this.socket.on('listening', () => {
             var address = this.socket.address();
-            console.log(`UDP Server listening on ${address.address}:${address.port}`);
+            logger.info(`Listening on ${address.address}:${address.port}`);
         });
 
         this.socket.on('message', (message: any[], remote: any) => {
+            logger.debug(`Recieved packet from ${remote.address}:${remote.port}`);
             this.handlePacket(message, remote);
         });
     }
 
     private handlePacket(message: any[], remote: any) {
 
-        var packet = Packet.parse(message);
+        let packet = Packet.parse(message);
 
-        let record: Record = this.recordsRepository.find(this.decimalTypeToStringType(packet.question[0].type), packet.question[0].name)
-        if (record != null) {
-            packet.answer = [
-                {
-                    name: record.name,
-                    type: packet.question[0].type,
-                    class: packet.question[0].class,
-                    ttl: record.ttl,
-                    address: record.address,
-                    data: record.data
+        logger.info(`Recieved query for ${packet.question[0].name} of type ${this.decimalTypeToStringType(packet.question[0].type)} from ${remote.address}:${remote.port}`);
+
+
+        this.recordsRepository.find(this.decimalTypeToStringType(packet.question[0].type), packet.question[0].name)
+            .then((result: Record) => {
+                if (result != null) {
+                    packet.answer = [
+                        {
+                            name: result.name,
+                            type: packet.question[0].type,
+                            class: packet.question[0].class,
+                            ttl: result.ttl,
+                            address: result.address,
+                            data: result.data
+                        }
+                    ];
+
                 }
-            ];
 
-        }
-
-        var buf = new Buffer(1028);
-        var numberOfBytes = Packet.write(buf, packet);
-        this.socket.send(buf, 0, numberOfBytes, remote.port, remote.address);
+                var buf = new Buffer(1028);
+                var numberOfBytes = Packet.write(buf, packet);
+                this.socket.send(buf, 0, numberOfBytes, remote.port, remote.address);
+            });
     }
 
     private decimalTypeToStringType(n: number) {
@@ -78,7 +89,10 @@ export class DNSServer {
 let port = 53;
 let host = '127.0.0.1';
 
-let recordsRepository = new RecordsRepository();
+let recordsRepository = new RecordsRepository({
+    server: 'localhost',
+    database: 'ajardns'
+});
 
 let dnsServer = new DNSServer(host, port, recordsRepository);
 

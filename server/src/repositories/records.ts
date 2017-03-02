@@ -1,15 +1,30 @@
+// Imports
+import * as mongodb from 'mongodb';
+
+// Imports models
 import { Record } from './../models/record';
 
 export class RecordsRepository {
 
-    find(type: string, name: string): Record {
-        
-        switch (type) {
-            case 'A':
-                return new Record(name, '129.168.1.100', undefined, 500);
-            default:
+    constructor(private config: any) {
+
+    }
+
+    find(type: string, name: string): Promise<Record> {
+        let mongoClient = new mongodb.MongoClient();
+        return mongoClient.connect('mongodb://' + this.config.server + ':27017/' + this.config.database).then((db: mongodb.Db) => {
+            var collection = db.collection('records');
+            return collection.findOne({
+                type: type,
+                name: name
+            });
+        }).then((result: any) => {
+            if (result == null) {
                 return null;
-        }
+            } else {
+                return new Record(result.name, result.address, result.data, result.ttl);
+            }
+        });
 
     }
 }
