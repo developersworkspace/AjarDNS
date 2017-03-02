@@ -90,7 +90,7 @@ let port = 53;
 let host = '127.0.0.1';
 
 let recordsRepository = new RecordsRepository({
-    server: 'localhost',
+    server: 'mongo',
     database: 'ajardns'
 });
 
