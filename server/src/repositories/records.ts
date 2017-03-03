@@ -10,7 +10,7 @@ export class RecordsRepository {
 
     }
 
-    find(type: string, name: string): Promise<Record> {
+    public find(type: string, name: string): Promise<Record> {
         let mongoClient = new mongodb.MongoClient();
         return mongoClient.connect('mongodb://' + this.config.server + ':27017/' + this.config.database).then((db: mongodb.Db) => {
             var collection = db.collection('records');

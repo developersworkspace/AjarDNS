@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "gulp ts & node ./src/app.js"
+    "start": "gulp build:dev & node ./src/app.js"
   },
   "author": "Barend Erasmus",
   "license": "MIT",
@@ -15,9 +15,11 @@
     "buffer": "^5.0.5",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
+    "gulp-rename": "^1.2.2",
     "gulp-typescript": "^3.1.5",
     "mongodb": "^2.2.24",
     "native-dns-packet": "^0.1.1",
+    "run-sequence": "^1.2.2",
     "typescript": "^2.2.1",
     "udp": "^1.0.0",
     "winston": "^2.3.1"
