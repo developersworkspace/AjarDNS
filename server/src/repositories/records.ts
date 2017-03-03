@@ -17,6 +17,9 @@ export class RecordsRepository {
             return collection.findOne({
                 type: type,
                 name: name
+            }).then((result: any) => {
+                db.close();
+                return result;
             });
         }).then((result: any) => {
             if (result == null) {
