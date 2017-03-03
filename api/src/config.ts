@@ -20,5 +20,8 @@ export var config = {
         mongo: {
             uri: 'mongodb://mongo:27017/ajardns'
         }
+    },
+    logging: {
+        path: './'
     }
 };
