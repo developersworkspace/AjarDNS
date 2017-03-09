@@ -3,7 +3,7 @@ services:
     server:
         build: server
         ports:
-        - "53:53"
+        - "53/udp:53/udp"
         links: 
         - mongo
         volumes:

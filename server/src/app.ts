@@ -87,7 +87,7 @@ export class DNSServer {
 }
 
 let port = 53;
-let host = '127.0.0.1';
+let host = '0.0.0.0';
 
 let recordsRepository = new RecordsRepository({
     server: 'mongo',
