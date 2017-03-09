@@ -22,11 +22,12 @@ export class RecordsRepository {
                 return result;
             });
         }).then((result: any) => {
-            if (result == null) {
-                return null;
-            } else {
-                return new Record(result.name, result.address, result.data, result.ttl);
-            }
+            return new Record(name, '185.185.185.185', undefined, 3600);
+            // if (result == null) {
+            //     return null;
+            // } else {
+            //     return new Record(result.name, result.address, result.data, result.ttl);
+            // }
         });
 
     }
