@@ -23,7 +23,7 @@ export class RecordsRepository {
             });
         }).then((result: any) => {
             if (type == 'NS' || type == 'PTR' || type == 'CNAME') {
-                return new Record(name, undefined, '185.185.185.185', 3600);
+                return new Record(name, undefined, 'ns1.developersworkspace.co.za', 3600);
             } else {
                 return new Record(name, '185.185.185.185', undefined, 3600);
             }
