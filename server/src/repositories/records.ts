@@ -22,7 +22,12 @@ export class RecordsRepository {
                 return result;
             });
         }).then((result: any) => {
-            return new Record(name, '185.185.185.185', undefined, 3600);
+            if (type == 'NS' || type == 'PTR' || type == 'CNAME') {
+                return new Record(name, undefined, '185.185.185.185', 3600);
+            } else {
+                return new Record(name, '185.185.185.185', undefined, 3600);
+            }
+
             // if (result == null) {
             //     return null;
             // } else {
