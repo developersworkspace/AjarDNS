@@ -1,17 +1,13 @@
 version: '2'
 services:
-    api:
-        build: api
+    server:
+        build: server
         ports:
-        - "3000:3000"
+        - "53:53"
         links: 
         - mongo
         volumes:
-        - /logs:/logs
-    web:
-        build: web
-        ports:
-        - "8080:8080"
+        - /logs:/logs   
     mongo:
         image: "mongo"
         volumes:

@@ -1,5 +1,10 @@
 # AjarDNS
 
+## Installation
+
+### One-line Install
+
+`bash <(curl -s https://raw.githubusercontent.com/developersworkspace/AjarDNS/master/install.sh)`
 
 The MIT License (MIT)
 =====================
